@@ -25,4 +25,40 @@ revealEls.forEach(el => observer.observe(el));
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// Testimonials slider
+const testimonials = document.querySelectorAll('.testimonials-slider .testimonial');
+const leftArrow = document.querySelector('.testimonial-arrow.left');
+const rightArrow = document.querySelector('.testimonial-arrow.right');
+const dots = document.querySelectorAll('.testimonial-dots .dot');
+let currentTestimonial = 0;
+
+function showTestimonial(idx) {
+  testimonials.forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === idx);
+  });
+}
+
+if (testimonials.length) {
+  showTestimonial(currentTestimonial);
+  if (leftArrow && rightArrow) {
+    leftArrow.addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    });
+    rightArrow.addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    });
+  }
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      currentTestimonial = i;
+      showTestimonial(currentTestimonial);
+    });
+  });
+}
+
 
